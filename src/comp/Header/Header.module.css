@@ -1,0 +1,33 @@
+
+.header{grid-area: header;}
+
+a{text-decoration: none;}
+
+.menu{
+  list-style: none;
+  margin: 20px 0 5px;
+  padding: 25px 0 5px;
+  background: white;
+}
+
+.menu a {
+  text-decoration: none;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold';
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 20px;
+  margin: 0 2px 0 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  display: inline-block;
+  transition: color .2s;
+}
+
+img{
+  text-align: left;
+}
+
+.Profile{
+  text-align: end;
+  padding: 0 0 0 400px;
+}

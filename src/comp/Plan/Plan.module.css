@@ -1,0 +1,22 @@
+.content {
+    display: grid;
+  margin: 20px 0 5px;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+  background: white;
+
+    grid-template-areas: 
+  "z m m";
+
+  grid-template-rows: 1fr 150px;
+  grid-template-columns: 250px 1100px;
+  grid-gap: 20px;
+}
+
+.content{grid-area: cont;
+  border: 2px solid #c1bdc042;
+  border-radius: 10px;}
+
+
+
+
