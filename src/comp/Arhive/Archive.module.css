@@ -1,0 +1,25 @@
+.archiveContainer {
+    padding: 20px;
+}
+
+.archiveList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.routeItem {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status {
+    /* Стили для иконки статуса маршрута */
+}
+
+/* Дополнительные стили можно добавить по необходимости */

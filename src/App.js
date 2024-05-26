@@ -4,7 +4,9 @@ import './App.css';
 import Header from './comp/Header/Header';
 import Plan from './comp/Plan/Plan';
 import Router from './comp/Router/Router';
-import Mapa from './comp/Plan/Karta/Map/Map';
+import Archive from './comp/Arhive/Archive';
+import Analitica from './comp/Analitics/Analitica';
+import DriversPage from './comp/DriversPage';
 
 
 const App = () => {
@@ -19,9 +21,13 @@ const App = () => {
         <Header/>
         <div className='app-wrapper-content'>
             <Routes>
+            <Route exact path="/" component={<Plan />} />
                 <Route path="/plan" element={<Plan />}/>
                 <Route path="/route" element={<Router />}/>
-                <Route path="/archive" element={<Mapa/>}/>
+                <Route path="/archive" element={<Archive/>}/>
+                <Route path="/analitics" element={<Analitica/>}/>
+                <Route path="/drivers" element={<DriversPage/>}/>
+
             </Routes>
         </div>
     </div>
