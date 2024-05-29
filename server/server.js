@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-const uri = 'mongodb+srv://paintnenugen:aF1NWK8JW4vt9MJZ@diplom.9v9jvxg.mongodb.net/Drivers.Drivers';
+const uri = 'mongodb+srv://paintnenugen:aF1NWK8JW4vt9MJZ@diplom.9v9jvxg.mongodb.net/Drivers';
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
