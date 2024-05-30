@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import './Registration.css';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Импортируем Link и useNavigate из react-router-dom
+import Login from '../../Login/Login';
 
-import Login from '../Login/Login';
-
-const Registration = ({setRegistrationSuccess}) => {
+const Registration = ({ setRegistrationSuccess }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
@@ -32,6 +31,7 @@ const Registration = ({setRegistrationSuccess}) => {
     try {
       const response = await axios.post('http://localhost:5000/api/register', formData);
       console.log('Registration successful:', response.data);
+      setRegistrationSuccess({ username: formData.username, email: formData.email }); // Передаем данные пользователя
       navigate('/profile'); // Перенаправление на страницу Profile
     } catch (error) {
       if (error.response) {
@@ -70,7 +70,6 @@ const Registration = ({setRegistrationSuccess}) => {
 
       {/* Используем Link для создания ссылки на страницу входа */}
       <p>Already have an account? <Link to="/login">Login</Link></p>
-      <Login setLoggedIn={setRegistrationSuccess} />
     </div>
   );
 };

@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+// const Zakaz = require('./models/Zakaz');
+
 const app = express();
 const PORT = 5000;
 
@@ -17,11 +19,53 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
+
+
+    
+    // Маршрут для получения всех заказов
+    const zakazSchema = new mongoose.Schema({
+        name: String,
+        adress: String,
+        time: String,
+        ves: String,
+        ras: String,
+        driver: String,
+        orderDate: String
+    });
+    
+    const Zakaz = mongoose.model('Zakaz', zakazSchema);
+    
+    app.post('/api/zakazy', async (req, res) => {
+        try {
+            console.log('Request body:', req.body); // Log request body
+            const newZakaz = new Zakaz(req.body);
+            await newZakaz.save();
+            res.status(201).send('Zakaz created successfully');
+        } catch (error) {
+            console.error('Error creating zakaz:', error);
+            res.status(500).send('Error creating zakaz');
+        }
+    });
+    
+    app.get('/api/zakazy', async (req, res) => {
+        try {
+            const zakazy = await Zakaz.find();
+            console.log('Fetched zakazy:', zakazy); // Log fetched zakazy
+            res.json(zakazy);
+        } catch (error) {
+            console.error('Error fetching zakazy:', error);
+            res.status(500).send('Error fetching zakazy');
+        }
+    });
+    
+
 // User schema and model
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    phone: String,
+    dateOfBirth: String
 });
 const User = mongoose.model('User', userSchema);
 
@@ -50,7 +94,7 @@ app.post('/api/login', async (req, res) => {
         const user = await User.findOne({ email, password });
         if (user) {
             // Успешный вход
-            res.status(200).send('Login successful');
+            res.status(200).json({ username: user.username, email: user.email });
         } else {
             // Неверные учетные данные
             res.status(401).send('Invalid email or password');
@@ -58,6 +102,85 @@ app.post('/api/login', async (req, res) => {
     } catch (error) {
         console.error('Error logging in:', error);
         res.status(500).send('Error logging in');
+    }
+});
+
+// Update profile route
+app.post('/api/updateProfile', async (req, res) => {
+  const { username, email, phone, dateOfBirth } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    user.username = username;
+    user.phone = phone;
+    user.dateOfBirth = dateOfBirth;
+    await user.save();
+    res.status(200).send('Profile updated successfully');
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).send('Error updating profile');
+  }
+});
+
+// Logout route
+
+app.get('/api/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        res.status(500).send('Error destroying session');
+      } else {
+        res.status(200).send('Logout successful');
+      }
+    });
+});
+
+
+const driverSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    city: { type: String, required: true }
+});
+const Driver = mongoose.model('Driver', driverSchema);
+
+// Get all drivers route
+app.get('/api/drivers', async (req, res) => {
+    try {
+        const drivers = await Driver.find();
+        res.json(drivers);
+    } catch (error) {
+        console.error('Error fetching drivers:', error);
+        res.status(500).send('Error fetching drivers');
+    }
+});
+
+
+// Add driver route
+app.post('/api/drivers', async (req, res) => {
+    console.log('Request body:', req.body); // Logging request body for debugging
+    const { name, surname, phoneNumber, city } = req.body;
+    try {
+        const newDriver = new Driver({ name, surname, phoneNumber, city });
+        await newDriver.save();
+        res.status(201).json(newDriver);
+    } catch (error) {
+        console.error('Error adding driver:', error);
+        res.status(500).send('Error adding driver');
+    }
+});
+
+app.delete('/api/drivers/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        console.log('Deleting driver:', id);
+        await Driver.findByIdAndDelete(id);
+        res.status(204).send();
+    } catch (error) {
+        console.error('Error deleting driver:', error);
+        res.status(500).send('Error deleting driver');
     }
 });
 

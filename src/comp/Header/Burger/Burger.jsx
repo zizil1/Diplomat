@@ -13,10 +13,9 @@ const Burger = () => {
 
     <div class="menu__box">
       <ul>
-   <li> <a> <NavLink to="/plan">План</NavLink> </a> </li>
+   <li> <a> <NavLink to="/zakazy">План</NavLink> </a> </li>
     <li> <a><NavLink to="/route">Построение маршрута</NavLink></a></li>
    <li> <a><NavLink to="/archive">Архив</NavLink></a></li>
-   <li><a><NavLink to="/analitics">Аналитика</NavLink></a></li>
    <li><a> <NavLink to="/drivers">Водител</NavLink></a> </li>
     <li><a><NavLink to="/profile">Профиль</NavLink></a> </li>
     </ul>
