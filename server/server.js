@@ -79,7 +79,9 @@ app.post('/api/register', async (req, res) => {
             return res.status(400).send('Email is already in use.');
         }
         const newUser = new User({ username, email, password });
-        await newUser.save();
+        await newUser.save().then( (res) => {
+            console.log(res)
+        });
         res.status(201).send('User registered successfully');
     } catch (error) {
         console.error('Error registering user:', error);
@@ -116,7 +118,7 @@ app.post('/api/updateProfile', async (req, res) => {
     user.username = username;
     user.phone = phone;
     user.dateOfBirth = dateOfBirth;
-    await user.save();
+    await user.save(); // TODO CHTO S POTOKOM?
     res.status(200).send('Profile updated successfully');
   } catch (error) {
     console.error('Error updating profile:', error);

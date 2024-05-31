@@ -55,10 +55,11 @@ const App = () => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  const handleLogin = (data) => {
-    setRegistrationSuccess(true);
-    setUserData(data);
-  };
+  // TODO Zachem?
+  // const handleLogin = (data) => {
+  //   setRegistrationSuccess(true);
+  //   setUserData(data);
+  // };
 
   return (
     <BrowserRouter>
@@ -67,7 +68,7 @@ const App = () => {
         <div className='app-wrapper-content'>
           <Routes>
             <Route exact path="/" element={<Registration setRegistrationSuccess={setRegistrationSuccess} />} />
-            <Route path='login' element={<Login/>}/>
+            <Route path='login' element={<Login setLoggedIn={setUserData}/>}/>
             <Route path="/zakazy" element={<Plan />} />
             <Route path="/route" element={<AddZakaz/>} />
             <Route path="/profile" element={<Profile {...userData} />} /> {/* Pass user data as props */}

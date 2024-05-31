@@ -29,7 +29,7 @@ const Registration = ({ setRegistrationSuccess }) => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:5000/api/register', formData);
+      const response = await axios.post('http://localhost:5000/api/register', formData); // TODO POST????
       console.log('Registration successful:', response.data);
       setRegistrationSuccess({ username: formData.username, email: formData.email }); // Передаем данные пользователя
       navigate('/profile'); // Перенаправление на страницу Profile
