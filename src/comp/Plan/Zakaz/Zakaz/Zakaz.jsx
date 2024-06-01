@@ -1,44 +1,42 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import Data from "./Data/Data";
-import './Zakaz.module.css';
+import React, { useState } from 'react';
+import s from './Zakaz.module.css';
+import Data from './Data/Data';
 
-const Zakaz = () => {
-    const [zakazy, setZakazy] = useState([]);
+
+const Zakaz = ({ zakazy, onZakazClick }) => {
     const [selectedDate, setSelectedDate] = useState('');
-
-    useEffect(() => {
-        const fetchZakazy = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/zakazy');
-                console.log('Fetched zakazy:', response.data); // Log fetched zakazy
-                setZakazy(response.data);
-            } catch (error) {
-                console.error('Error fetching zakazy:', error);
-            }
-        };
-
-        fetchZakazy();
-    }, []);
-
-    const filteredZakazy = zakazy.filter(zakaz => zakaz.orderDate === selectedDate);
-
+  
+    const filteredZakazy = zakazy.filter(zakaz => zakaz.date === selectedDate);
+  
+    const ZakazElement = filteredZakazy.map(zakaz => (
+      <Data
+        key={zakaz._id}
+        id={zakaz._id}
+        name={zakaz.name}
+        adress={zakaz.adress}
+        time={zakaz.time}
+        ves={zakaz.ves}
+        ras={zakaz.ras}
+        onClick={() => onZakazClick(zakaz)}
+      />
+    ));
+  
     return (
-        <div className="zakaz">
-            <h2>Zakazy</h2>
-            <input 
-                type="date" 
-                value={selectedDate} 
-                onChange={(e) => setSelectedDate(e.target.value)} 
-                className="kalendar" 
-            />
-            <div className="zakaz-list">
-                {filteredZakazy.map(zakaz => (
-                    <Data key={zakaz._id} {...zakaz} />
-                ))}
-            </div>
+      <div className={s.zakaz}>
+        <div>
+          <input
+            className={s.kalendar}
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
         </div>
+        <div className={s.dano}>
+          {ZakazElement}
+        </div>
+        <div></div>
+      </div>
     );
-};
-
-export default Zakaz;
+  };
+  
+  export default Zakaz;

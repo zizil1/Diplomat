@@ -24,23 +24,21 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
     
     // Маршрут для получения всех заказов
     const zakazSchema = new mongoose.Schema({
-        name: String,
-        adress: String,
-        time: String,
-        ves: String,
-        ras: String,
-        driver: String,
-        orderDate: String
+        name: { type: String, required: true },
+        adress: { type: String, required: true },
+        time: { type: String, required: true },
+        ves: { type: String, required: true },
+        ras: { type: String, required: true },
+        startPoint: { type: String, required: true },
+        endPoint: { type: String, required: true }
     });
-    
     const Zakaz = mongoose.model('Zakaz', zakazSchema);
     
     app.post('/api/zakazy', async (req, res) => {
         try {
-            console.log('Request body:', req.body); // Log request body
-            const newZakaz = new Zakaz(req.body);
-            await newZakaz.save();
-            res.status(201).send('Zakaz created successfully');
+            const zakaz = new Zakaz(req.body);
+            await zakaz.save();
+            res.status(201).send(zakaz);
         } catch (error) {
             console.error('Error creating zakaz:', error);
             res.status(500).send('Error creating zakaz');
@@ -50,8 +48,7 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
     app.get('/api/zakazy', async (req, res) => {
         try {
             const zakazy = await Zakaz.find();
-            console.log('Fetched zakazy:', zakazy); // Log fetched zakazy
-            res.json(zakazy);
+            res.status(200).json(zakazy);
         } catch (error) {
             console.error('Error fetching zakazy:', error);
             res.status(500).send('Error fetching zakazy');

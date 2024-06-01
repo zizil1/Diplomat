@@ -1,8 +1,11 @@
 import React from "react";
 import './Burger.css';
 import { NavLink } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 
 const Burger = () => {
+
+
     return (
         <div class="hamburger-menu">
     <input id="menu__toggle" type="checkbox" />
