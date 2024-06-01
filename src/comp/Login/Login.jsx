@@ -25,7 +25,7 @@ const Login = ({ setLoggedIn }) => {
     try {
       const response = await axios.post('http://localhost:5000/api/login', formData);
       console.log('Login successful:', response.data);
-      setLoggedIn(true); // Устанавливаем флаг успешного входа
+      setLoggedIn({ username: formData.username, email: formData.email }); //  Передаем данные пользователя
       navigate('/profile'); // Перенаправляем на страницу профиля
     } catch (error) {
       console.error('Login failed:', error.response.data);
