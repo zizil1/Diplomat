@@ -18,6 +18,8 @@
     "react": "^18.2.0",
     "react-datepicker": "^6.9.0",
     "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
+    "react-leaflet-markercluster": "^2.0.0",
     "react-router-app": "^0.1.6",
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",

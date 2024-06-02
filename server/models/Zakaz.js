@@ -1,3 +1,4 @@
+const { type } = require('@testing-library/user-event/dist/type');
 const mongoose = require('mongoose');
 
 const zakazSchema = new mongoose.Schema({
@@ -6,6 +7,8 @@ const zakazSchema = new mongoose.Schema({
     time: { type: String, required: true },
     ves: { type: String, required: true },
     ras: { type: String, required: true },
+    startPoint:{type:String, require: true}, 
+    endPoint: {type:String, require: true},
     isFrozen: { type: Boolean, default: false },
     isPerishable: { type: Boolean, default: false },
     isHighVehicle: { type: Boolean, default: false },

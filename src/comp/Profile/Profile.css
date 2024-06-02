@@ -1,56 +1,52 @@
 .profile-container {
-  max-width: 600px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   background-color: #f9f9f9;
 }
 
-.profile-details {
-  margin-bottom: 20px;
-}
-
-.profile-details p {
-  margin: 10px 0;
+h1 {
+  text-align: center;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
-.form-group label {
+label {
   display: block;
   margin-bottom: 5px;
 }
 
-.form-group input {
+input[type="text"],
+input[type="email"],
+input[type="date"] {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.edit-profile-button,
-button[type="button"] {
+button {
   padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
   background-color: #007bff;
-  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
 }
 
-.edit-profile-button:hover,
-button[type="button"]:hover {
-  background-color: #0056b3;
+.profile-details {
+  margin-top: 20px;
+  margin-right: 20px;
 }
 
 .message {
   margin-top: 20px;
+  text-align: center;
   color: green;
-}
-
-.error {
-  color: red;
 }
