@@ -8,11 +8,11 @@ const Mapa = () => {
   const [endPoint, setEndPoint] = useState(null);
   const [routePoints, setRoutePoints] = useState([]);
 
-  const fetchRoute = async (endPointCoords) => {
+  const fetchRoute = async (startPointCoords, endPointCoords) => {
     try {
-      console.log('Start point:', startPoint);
+      console.log('Start point:', startPointCoords);
       console.log('End point:', endPointCoords);
-      const response = await axios.get(`https://api.routing.yandex.net/v2/route/?apikey=a30acdc8-67eb-463f-9a2e-7160dd2aba67&from=${startPoint[1]},${startPoint[0]}&to=${endPointCoords[1]},${endPointCoords[0]}&lang=ru_RU&results=1`);
+      const response = await axios.get(`https://api.routing.yandex.net/v2/route/?apikey=cce75296-d091-45dc-abdd-4b44851c8a08&from=${startPoint[1]},${startPoint[0]}&to=${endPointCoords[1]},${endPointCoords[0]}&lang=ru_RU&results=1`);
       console.log('Response:', response.data);
       const routePoints = response.data.routes[0].geometry.coordinates;
       console.log('Route points:', routePoints);
@@ -26,9 +26,10 @@ const Mapa = () => {
     const coords = event.get('coords');
     if (!startPoint) {
       setStartPoint(coords);
+      console.log('Start point set:', coords);
     } else if (!endPoint) {
       setEndPoint(coords);
-      fetchRoute(coords);
+      fetchRoute(startPoint, coords); //Передаем координаты начальной и конечной точки
     } else {
       setRoutePoints([...routePoints, coords]);
     }
@@ -45,7 +46,7 @@ const Mapa = () => {
   // };
 
   return (
-    <YMaps apiKey="a30acdc8-67eb-463f-9a2e-7160dd2aba67">
+    <YMaps apiKey="cce75296-d091-45dc-abdd-4b44851c8a08">
       <div>
         <Map
           defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
@@ -71,6 +72,9 @@ const Mapa = () => {
         </Map>
       </div>
     </YMaps>
+
+
+
   );
 };
 export default Mapa;
