@@ -1,6 +1,33 @@
-.zakaz{grid-area: z;}
+.zakaz {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    padding: 20px;
+}
 
-.dano{
-    margin: 10px 5px;
-    border-radius: 10px;
+.kalendar {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.zakaz_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zakaz_item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.zakaz_item:hover {
+    background-color: #f0f0f0;
+}
+
+.selected {
+    background-color: #cce5ff;
+    border-color: #007bff;
 }

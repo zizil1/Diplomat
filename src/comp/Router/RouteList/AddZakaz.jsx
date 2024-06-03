@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './AddZakaz.css';
-import Mapa from "../../Plan/Karta/Map/Map";
 
 const AddZakaz = () => {
     const [drivers, setDrivers] = useState([]);
     const [selectedDriver, setSelectedDriver] = useState('');
-    const [startPoint, setStartPoint] = useState({ latitude: '', longitude: '' });
-    const [endPoint, setEndPoint] = useState({ latitude: '', longitude: '' });
+    const [startPoint, setStartPoint] = useState('');
+    const [endPoint, setEndPoint] = useState('');
     const [time, setTime] = useState('');
     const [ves, setVes] = useState('');
     const [ras, setRas] = useState('');
@@ -30,28 +29,27 @@ const AddZakaz = () => {
         e.preventDefault();
         const driver = drivers.find(driver => driver._id === selectedDriver);
         const newZakaz = { 
-          name: driver ? driver.name : '', 
-          time, 
-          ves, 
-          ras, 
-          driver: selectedDriver, 
-          orderDate, 
-          startPoint, 
-          endPoint 
+            name: driver ? driver.name : '', 
+            time, 
+            ves, 
+            ras, 
+            driver: selectedDriver, 
+            orderDate, 
+            startPoint, 
+            endPoint 
         };
+        console.log('Submitting zakaz:', newZakaz); // Отладочный вывод
         try {
-            console.log('Creating zakaz:', newZakaz);
             const response = await axios.post('http://localhost:5000/api/zakazy', newZakaz);
             console.log('Zakaz created successfully:', response.data);
-            // Очистить поля формы после успешного создания заказа
+            // Reset form fields
             setSelectedDriver('');
             setTime('');
             setVes('');
             setRas('');
             setOrderDate('');
-            // Сбросить также начальную и конечную точки
-            setStartPoint({ latitude: '', longitude: '' });
-            setEndPoint({ latitude: '', longitude: '' });
+            setStartPoint('');
+            setEndPoint('');
         } catch (error) {
             console.error('Error creating zakaz:', error);
         }
@@ -71,41 +69,22 @@ const AddZakaz = () => {
                 <input type="text" value={ves} onChange={(e) => setVes(e.target.value)} placeholder="Ves" required />
                 <input type="text" value={ras} onChange={(e) => setRas(e.target.value)} placeholder="Ras" required />
                 <input type="date" value={orderDate} onChange={(e) => setOrderDate(e.target.value)} required />
-
-                {/* Добавляем поля для ввода начальной и конечной точек */}
                 <input 
                     type="text" 
-                    value={startPoint.latitude} 
-                    onChange={(e) => setStartPoint({ ...startPoint, latitude: e.target.value })} 
-                    placeholder="Start Point" 
+                    value={startPoint} 
+                    onChange={(e) => setStartPoint(e.target.value)} 
+                    placeholder="Start Point Address" 
                     required 
                 />
                 <input 
                     type="text" 
-                    value={startPoint.longitude} 
-                    onChange={(e) => setStartPoint({ ...startPoint, longitude: e.target.value })} 
-                    placeholder="Start Point" 
-                    required 
-                />
-                <input 
-                    type="text" 
-                    value={endPoint.latitude} 
-                    onChange={(e) => setEndPoint({ ...endPoint, latitude: e.target.value })} 
-                    placeholder="End Point" 
-                    required 
-                />
-                <input 
-                    type="text" 
-                    value={endPoint.longitude} 
-                    onChange={(e) => setEndPoint({ ...endPoint, longitude: e.target.value })} 
-                    placeholder="End Point" 
+                    value={endPoint} 
+                    onChange={(e) => setEndPoint(e.target.value)} 
+                    placeholder="End Point Address" 
                     required 
                 />
                 <button type="submit">Add Zakaz</button>
             </form>
-
-            {/* Отображаем карту с переданными точками */}
-            {startPoint.latitude && startPoint.longitude && endPoint.latitude && endPoint.longitude && <Mapa startPoint={startPoint} endPoint={endPoint} />}
         </div>
     );
 };

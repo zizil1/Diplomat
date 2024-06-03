@@ -1,14 +1,18 @@
 import React from "react";
-import s from './Plan.module.css'
+import { useState } from "react";
+import s from './Plan.module.css';
 import Zakaz from "./Zakaz/Zakaz/Zakaz";
-import Karta from "./Karta/Karta";
+import Mapa from "./Karta/Map/Map";
 
 const Plan = () => {
-    return <div className={s.content}>
-    <Zakaz /> 
-    <Karta />
-    
-    </div>
+    const [selectedZakaz, setSelectedZakaz] = useState(null);
+
+    return (
+        <div className={s.content}>
+            <Zakaz onSelectZakaz={setSelectedZakaz} /> 
+            <Mapa startPoint={selectedZakaz?.startPoint} endPoint={selectedZakaz?.endPoint} />
+        </div>
+    );
 }
 
 export default Plan;

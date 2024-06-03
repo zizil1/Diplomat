@@ -54,8 +54,8 @@ import Login from './comp/Login/Login';
 const App = () => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [selectedZakaz, setSelectedZakaz] = useState(null);
 
-  // TODO Zachem?
   const handleLogin = (data) => {
     setRegistrationSuccess(true);
     setUserData(data);
@@ -74,7 +74,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Registration setRegistrationSuccess={handleRegistration} />} />
             <Route path='login' element={<Login setLoggedIn={handleLogin}/>}/>
-            <Route path="/zakazy" element={<Plan />} />
+            <Route path="/zakazy" element={<Plan onSelectZakaz={setSelectedZakaz} selectedZakaz={selectedZakaz} />} />
             <Route path="/route" element={<AddZakaz/>} />
             <Route path="/profile" element={<Profile {...userData} />} /> {/* Pass user data as props */}
             <Route path="/archive" element={<Archive/>}/>

@@ -2,9 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const Order = require('./models/Orders');
+const axios = require('axios')
 
-// const Zakaz = require('./models/Zakaz');
+
+
+
+
+// Создаем модель и связываем ее с коллекцией 'zakaz'
+
 
 const app = express();
 const PORT = 5000;
@@ -20,30 +25,13 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
+  
 
-    
+    const Zakaz = require('./models/Zakaz');
 
-
-
-
-
-    
-    // Маршрут для получения всех заказов
-    const zakazSchema = new mongoose.Schema({
-        name: String,
-        adress: String,
-        time: String,
-        ves: String,
-        ras: String,
-        driver: String,
-        orderDate: String
-    });
-    
-    const Zakaz = mongoose.model('Zakaz', zakazSchema);
-    
     app.post('/api/zakazy', async (req, res) => {
         try {
-            console.log('Request body:', req.body); // Log request body
+            console.log('Received zakaz data:', req.body);
             const newZakaz = new Zakaz(req.body);
             await newZakaz.save();
             res.status(201).send('Zakaz created successfully');
@@ -53,17 +41,16 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
         }
     });
     
+    // Получение всех заказов
     app.get('/api/zakazy', async (req, res) => {
         try {
             const zakazy = await Zakaz.find();
-            console.log('Fetched zakazy:', zakazy); // Log fetched zakazy
             res.json(zakazy);
         } catch (error) {
             console.error('Error fetching zakazy:', error);
             res.status(500).send('Error fetching zakazy');
         }
     });
-    
 
 // User schema and model
 const userSchema = new mongoose.Schema({
@@ -191,6 +178,21 @@ app.delete('/api/drivers/:id', async (req, res) => {
         res.status(500).send('Error deleting driver');
     }
 });
+
+app.post('/api/route', async (req, res) => {
+    const { startCoords, endCoords } = req.body;
+    try {
+        const response = await axios.get(
+            `https://api-maps.yandex.ru/services/route/2.0/?apikey=d4045940-53f3-4b12-b60d-2769f3ed6c13&lang=ru_RU&format=json&mode=driving&waypoints=${startCoords.join(',')}&waypoints=${endCoords.join(',')}`
+        );
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error fetching route:', error);
+        res.status(500).send('Error fetching route');
+    }
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
